@@ -16,10 +16,13 @@ function App() {
     };
     fetchData();
   }, []);
+  const handleUser = (newUser) => {
+    setUsers([...users, newUser]);
+  };
   return (
     <>
       <h1>React CRUD</h1>
-      <Form />
+      <Form url={url} onAddUser={handleUser} />
       {users && <Table users={users} />}
     </>
   );
@@ -27,14 +30,17 @@ function App() {
 
 export default App;
 
-{/* <form>
+{
+  /* <form>
   <input required name="nombre" type="text" placeholder="Nombre" />
   <input required name="apellido" type="text" placeholder="Apellido" />
   <input required name="dni" type="number" placeholder="Documento" />
   <input required name="edad" type="number" placeholder="Edad" />
   <button>Agregar</button>
-</form> */}
-{/* <h2>Tabla</h2>
+</form> */
+}
+{
+  /* <h2>Tabla</h2>
 <table>
   <thead>
     <tr>
@@ -55,7 +61,8 @@ export default App;
       );
     })}
   </tbody>
-</table> */}
+</table> */
+}
 // const juan = {
 //   nombre: "Juan",
 //   apellido: "Gomez",

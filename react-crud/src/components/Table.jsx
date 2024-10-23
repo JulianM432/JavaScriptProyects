@@ -1,20 +1,15 @@
-import usersJSON from "./mock/users.json"
-import "./Table.css"
+import usersJSON from "../mock/users.json";
+import '../styles/Table.css';
+import HeadTable from "./HeadTable";
 export default function Table({ users }) {
   // const usersArray = [users];
-
+  const header = ["Name","Username","Email","Zipcode"]
   return (
     <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Zip-Code</th>
-        </tr>
-      </thead>
+      <HeadTable header={header}/>
       <tbody>
-        { users && users.map((user) => (
+        {users &&
+          users.map((user) => (
             <tr key={user.id}>
               <td>{user.name}</td>
               <td>{user.username}</td>

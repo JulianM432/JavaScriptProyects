@@ -1,20 +1,17 @@
 import { useEffect } from "react";
-import "./App.css";
-import Table from "./Table";
-import axios from "axios";
+import "./styles/App.css";
+import Table from "./components/Table";
 import { useState } from "react";
-import Form from "./Form";
+import Form from './components/Form';
+import { usersAPI } from "./api/usersAPI";
 function App() {
   const [users, setUsers] = useState([]);
-  const url = "https://jsonplaceholder.typicode.com/users";
   useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get(url)
-        .then((res) => setUsers(res.data))
-        .catch((error) => console.error(error));
-    };
-    fetchData();
+    usersAPI.getAllUsers().then((res) => {
+      if (res.status === 200) {
+        setUsers(res.data);
+      }
+    });
   }, []);
   const handleUser = (newUser) => {
     setUsers([...users, newUser]);
@@ -22,7 +19,7 @@ function App() {
   return (
     <>
       <h1>React CRUD</h1>
-      <Form url={url} onAddUser={handleUser} />
+      <Form onAddUser={handleUser} />
       {users && <Table users={users} />}
     </>
   );

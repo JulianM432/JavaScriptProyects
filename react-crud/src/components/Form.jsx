@@ -1,16 +1,16 @@
 import { useState } from "react";
-import "./Form.css";
-import axios from "axios";
-
-export default function Form({ url, onAddUser }) {
-  const [formData, setFormData] = useState({
+import { usersAPI } from "../api/usersAPI";
+import "../styles/Form.css";
+export default function Form({ onAddUser }) {
+  const initialValues = {
     name: "",
     username: "",
     email: "",
     address: {
       zipcode: "",
     },
-  });
+  };
+  const [formData, setFormData] = useState(initialValues);
 
   // Para algo mas generico en caso de otra ocasion
   // const handleChange = (e) => {
@@ -46,17 +46,12 @@ export default function Form({ url, onAddUser }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    axios
-      .post(url, formData)
-      .then((res) => onAddUser(res.data))
-      .catch((error) => console.error(error));
-
-    setFormData({
-      name: "",
-      username: "",
-      email: "",
-      address: { zipcode: "" },
+    usersAPI.createUser(formData).then((res) => {
+      // console.log(res);
+      if (res.status === 201 || res.status === 200) {
+        onAddUser(res.data);
+        setFormData(initialValues);
+      }
     });
   };
   return (
